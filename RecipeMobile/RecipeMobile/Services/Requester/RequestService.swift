@@ -10,7 +10,7 @@ import Foundation
 // MARK: - Requester Protocol
 
 protocol Requester {
-    func performRequest<T: Decodable>(with request: URLRequest) async throws -> T
+    func performRequest<T: Decodable>(endpoint: Endpoint, responseModel: T.Type) async throws -> T
 }
 
 // MARK: - RequestService Class
@@ -23,8 +23,8 @@ class RequestService: Requester {
         self.session = session
     }
     
-    func performRequest<T: Decodable>(with request: URLRequest) async throws -> T {
-        guard request.url != nil else {
+    func performRequest<T: Decodable>(endpoint: Endpoint, responseModel: T.Type) async throws -> T {
+        guard let request = endpoint.urlRequest else {
             throw NetworkError.invalidURL
         }
         
