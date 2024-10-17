@@ -26,7 +26,7 @@ extension HTTPURLResponse {
         case 404:
             return .notFound
         case 500:
-            return .internalServerError
+            return .serverError
         case 503:
             return .serviceUnavailable
         default:
@@ -47,7 +47,7 @@ enum NetworkError: Error, LocalizedError {
     case forbidden
     case decodeFailed
     case unauthenticated
-    case internalServerError
+    case serverError
     case serviceUnavailable
     case unknownError
     case other(String)
@@ -70,7 +70,7 @@ enum NetworkError: Error, LocalizedError {
             return "The request path was not found"
         case .forbidden:
             return "Error, forbidden access"
-        case .internalServerError:
+        case .serverError:
             return "Internal Server Error"
         case .serviceUnavailable:
             return "serviceUnavailable"

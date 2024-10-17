@@ -21,22 +21,11 @@ struct RecipeView: View {
         NavigationStack {
             ScrollView {
                 if requestError != nil {
-                    VStack(alignment: .center) {
-                        Spacer()
-                        Text(requestError?.localizedDescription ?? "")
-                            .font(.title3)
-                            .foregroundStyle(.primary)
-                            .padding(.vertical)
-                        
-                        Image(systemName: "text.page.badge.magnifyingglass")
-                            .resizable()
-                            .frame(width: 100, height: 100, alignment: .center)
-                    }
-                    .padding()
+                    EventStateView(text: requestError?.localizedDescription ?? "", imageName: "text.page.badge.magnifyingglass")
                 } else {
                     
                     if recipeSections.isEmpty {
-                        
+                        EventStateView(text: "Sorry, We couldn't find some recipes for you.", imageName: "carrot")
                     } else {
                         LazyVStack(alignment: .leading) {
                             ForEach(recipeSections, id: \.id) { section in

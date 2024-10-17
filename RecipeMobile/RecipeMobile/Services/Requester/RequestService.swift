@@ -48,7 +48,7 @@ class RequestService: Requester {
             let decoder = JSONDecoder()
             
             do {
-                let decodedObject = try decoder.decode(T.self, from: RecipesResponse.mockMalformedData)
+                let decodedObject = try decoder.decode(T.self, from: data)
                 return decodedObject
             } catch {
                 throw NetworkError.decodeFailed

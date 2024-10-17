@@ -17,13 +17,13 @@ struct EventStateView: View {
         VStack(alignment: .center) {
             Spacer()
             Text(text)
-                .font(.title3)
+                .font(.title2)
                 .foregroundStyle(.primary)
                 .padding(.vertical)
             
             Image(systemName: imageName)
                 .resizable()
-                .frame(width: 100, height: 100, alignment: .center)
+                .frame(width: 150, height: 150, alignment: .center)
         }
         .padding()
         

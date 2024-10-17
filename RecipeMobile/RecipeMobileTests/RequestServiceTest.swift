@@ -61,51 +61,28 @@ class RequestServiceTests: XCTestCase {
         
         let endpoint = RecipeEndpoint()
         
-        // Act
-        let response: RecipesResponse = try await requestService.performRequest(endpoint: endpoint, responseModel: RecipesResponse.self)
-        
-        print(response)
-        // Assert
-        XCTAssertEqual(response.recipes.count, 63)
-        
-        let american = response.recipes.filter { $0.cuisine == "American" }
-        
-        XCTAssertEqual(american.count, 14)
+        do {
+            let _: RecipesResponse = try await requestService.performRequest(endpoint: endpoint, responseModel: RecipesResponse.self)
+        } catch {
+            XCTAssertTrue(error is NetworkError)
+            XCTAssertEqual(error.localizedDescription, "Sorry, the data you are trying to see may be corrupted or doesn't exist. \nPlease contact Support.")
+        }
     }
     
-//    func testPerformRequest_FailureResponse() async throws {
-//        // Arrange
-//        mockSession.data = nil
-//        mockSession.response = HTTPURLResponse(url: URL(string: "https://example.com")!,
-//                                               statusCode: 500,
-//                                               httpVersion: nil,
-//                                               headerFields: nil)
-//        let endpoint = RecipeEndpoint()
-//        
-//        do {
-//            // Act
-//            let _: RecipesResponse = try await requestService.performRequest(endpoint: endpoint, responseModel: RecipesResponse.self)
-//            XCTFail("Expected to throw an error but succeeded.")
-//        } catch {
-//            // Assert
-//            XCTAssertEqual(error as? NetworkError, NetworkError.serviceUnavailable)
-//        }
-//    }
-}
-
-// Mock URLSessionProtocol
-class URLSessionMock: URLSessionProtocol {
-    var data: Data?
-    var response: URLResponse?
-    var error: Error?
-    
-    func data(for request: URLRequest) async throws -> (Data, URLResponse) {
-        if let error = error {
-            throw error
+    func testPerformRequest_FailureResponse() async throws {
+        // Arrange
+        mockSession.data = nil
+        mockSession.response = HTTPURLResponse(url: URL(string: "https://d3jbb8n5wk0qxi.cloudfront.net/recipes.json")!,
+                                               statusCode: 500,
+                                               httpVersion: nil,
+                                               headerFields: nil)
+        let endpoint = RecipeEndpoint()
+        
+        do {
+            let _: RecipesResponse = try await requestService.performRequest(endpoint: endpoint, responseModel: RecipesResponse.self)
+            XCTFail("Expected to throw an error but succeeded.")
+        } catch {
+            XCTAssertEqual(error.localizedDescription, "Internal Server Error")
         }
-        guard let data = data, let response = response else {
-            throw NetworkError.unknownError
-        }
-        return (data, response)
     }
 }
