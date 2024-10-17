@@ -16,10 +16,22 @@ class RecipeService: ObservableObject {
         self.recipeRequester = recipeRequester
     }
     
-    func fetchRecipes() async throws -> [Recipe] {
+    func fetchRecipes() async throws -> [RecipeSection] {
         let endpoint = RecipeEndpoint()
-        let recipes = try await recipeRequester.performRequest(endpoint: endpoint, responseModel: RecipesResponse.self)
-        return recipes.recipes
+        let response = try await recipeRequester.performRequest(endpoint: endpoint, responseModel: RecipesResponse.self)
+        let sections = makesRecipeSections(for: response.recipes)
+        
+        return sections
+    }
+    
+    func makesRecipeSections(for recipes: [Recipe]) -> [RecipeSection] {
+        let sectionNames = Set(recipes.map { $0.cuisine })
+        
+        let recipeSections = sectionNames.map { sectionName in
+            RecipeSection(sectionName: sectionName, recipes: recipes.filter({ $0.cuisine == sectionName }))
+        }
+        
+        return recipeSections
     }
     
 }
