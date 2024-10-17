@@ -10,10 +10,11 @@ import Kingfisher
 
 struct RecipeView: View {
     
-    @State var recipeSections: [RecipeSection] = []
-    @State var requestError: Error?
+    // MARK: - View attributes
     @ObservedObject var service = RecipeService()
     
+    @State var recipeSections: [RecipeSection] = []
+    @State var requestError: Error?
     @State private var selectedURL: NavigationURL?
     @State private var selectedImageURL: NavigationURL?
     
@@ -75,6 +76,8 @@ struct RecipeView: View {
         }
     }
 }
+
+// MARK: - RecipeView Extension
 
 extension RecipeView {
     
