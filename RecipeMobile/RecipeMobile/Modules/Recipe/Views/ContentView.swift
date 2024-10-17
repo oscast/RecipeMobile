@@ -8,14 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var recipes: [Recipe] = []
+    @ObservedObject var service = RecipeService()
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            ForEach(recipes, id: \.id) { recipe in
+                Text(recipe.name)
+            }
         }
         .padding()
+        .task({
+            do {
+                self.recipes = try await service.fetchRecipes()
+            } catch {
+                print("OH NOOO \(error)")
+            }
+        })
     }
 }
 

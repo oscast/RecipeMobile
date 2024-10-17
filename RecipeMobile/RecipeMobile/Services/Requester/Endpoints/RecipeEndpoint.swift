@@ -10,7 +10,7 @@ import Foundation
 struct RecipeEndpoint: Endpoint {
     var baseURL: URL { .cloudFront }
     var path: String { "recipes.json" }
-    var method: HTTPMethod { .post }
+    var method: HTTPMethod { .get }
     var headers: [String: String]?
     var queryParams: [String: String]?
     var body: Data?

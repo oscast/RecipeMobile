@@ -10,15 +10,16 @@ import Combine
 
 class RecipeService: ObservableObject {
     
-    let recipeService: Requester
+    let recipeRequester: Requester
     
-    init(recipeService: Requester) {
-        self.recipeService = recipeService
+    init(recipeRequester: Requester = RequestService()) {
+        self.recipeRequester = recipeRequester
     }
     
     func fetchRecipes() async throws -> [Recipe] {
         let endpoint = RecipeEndpoint()
-        return try await recipeService.performRequest(endpoint: endpoint, responseModel: [Recipe].self)
+        let recipes = try await recipeRequester.performRequest(endpoint: endpoint, responseModel: RecipesResponse.self)
+        return recipes.recipes
     }
     
 }

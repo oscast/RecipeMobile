@@ -11,7 +11,12 @@ struct RecipesResponse: Codable {
     let recipes: [Recipe]
 }
 
-struct Recipe: Codable {
+struct Recipe: Codable, Identifiable {
+    
+    var id: String {
+        uuid
+    }
+    
     let cuisine: String
     let name: String
     let photoUrlLarge: URL
