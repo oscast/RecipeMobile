@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  RecipeView.swift
 //  RecipeMobile
 //
 //  Created by Oscar Castillo on 17/10/24.
@@ -8,7 +8,7 @@
 import SwiftUI
 import Kingfisher
 
-struct ContentView: View {
+struct RecipeView: View {
     
     @State var recipeSections: [RecipeSection] = []
     @State var requestError: Error?
@@ -57,5 +57,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    RecipeView()
 }
