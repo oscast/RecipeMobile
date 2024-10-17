@@ -25,10 +25,10 @@ class RecipeService: ObservableObject {
     }
     
     func makesRecipeSections(for recipes: [Recipe]) -> [RecipeSection] {
-        let sectionNames = Set(recipes.map { $0.cuisine })
+        let sectionNames = Set(recipes.map { $0.cuisine }).sorted(by: { $0 < $1 })
         
         let recipeSections = sectionNames.map { sectionName in
-            RecipeSection(sectionName: sectionName, recipes: recipes.filter({ $0.cuisine == sectionName }))
+            RecipeSection(sectionName: sectionName, recipes: recipes.filter({ $0.cuisine == sectionName }).sorted(by: { $0.name < $1.name }))
         }
         
         return recipeSections
