@@ -63,7 +63,7 @@ enum NetworkError: Error, LocalizedError {
         case .unauthenticated:
             return "Sorry, you are not authenticated"
         case .decodeFailed:
-            return "Failed to decode the response data"
+            return "Sorry, the data you are trying to see may be corrupted or doesn't exist. \nPlease contact Support."
         case .unauthorized:
             return "Sorry, you are not authorized to see this information"
         case .notFound:

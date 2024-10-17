@@ -7,6 +7,12 @@
 
 import Foundation
 
+protocol URLSessionProtocol {
+    func data(for request: URLRequest) async throws -> (Data, URLResponse)
+}
+
+extension URLSession: URLSessionProtocol {}
+
 // MARK: - Requester Protocol
 
 protocol Requester {
@@ -17,9 +23,9 @@ protocol Requester {
 
 class RequestService: Requester {
     
-    private let session: URLSession
+    private let session: URLSessionProtocol
     
-    init(session: URLSession = .shared) {
+    init(session: URLSessionProtocol = URLSession.shared) {
         self.session = session
     }
     
@@ -42,7 +48,7 @@ class RequestService: Requester {
             let decoder = JSONDecoder()
             
             do {
-                let decodedObject = try decoder.decode(T.self, from: data)
+                let decodedObject = try decoder.decode(T.self, from: RecipesResponse.mockMalformedData)
                 return decodedObject
             } catch {
                 throw NetworkError.decodeFailed
