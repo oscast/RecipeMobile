@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		9A5A2AF42CC1A2BC000BF786 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 9A5A2AF32CC1A2BC000BF786 /* Kingfisher */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		9A5A2AC72CC1A128000BF786 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A5A2AF42CC1A2BC000BF786 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +117,7 @@
 			);
 			name = RecipeMobile;
 			packageProductDependencies = (
+				9A5A2AF32CC1A2BC000BF786 /* Kingfisher */,
 			);
 			productName = RecipeMobile;
 			productReference = 9A5A2AB62CC1A125000BF786 /* RecipeMobile.app */;
@@ -195,6 +201,9 @@
 			);
 			mainGroup = 9A5A2AAD2CC1A125000BF786;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				9A5A2AF22CC1A2BC000BF786 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9A5A2AB72CC1A125000BF786 /* Products */;
 			projectDirPath = "";
@@ -554,6 +563,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9A5A2AF22CC1A2BC000BF786 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9A5A2AF32CC1A2BC000BF786 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9A5A2AF22CC1A2BC000BF786 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9A5A2AAE2CC1A125000BF786 /* Project object */;
 }
