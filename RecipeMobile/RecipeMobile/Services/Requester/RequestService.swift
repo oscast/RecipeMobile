@@ -19,31 +19,39 @@ class RequestService: Requester {
     
     private let session: URLSession
     
-    // Dependency Injection of URLSession, allowing for mock sessions during testing
     init(session: URLSession = .shared) {
         self.session = session
     }
     
-    // Perform request using a generic return type and URLRequest injection
     func performRequest<T: Decodable>(with request: URLRequest) async throws -> T {
+        guard request.url != nil else {
+            throw NetworkError.invalidURL
+        }
+        
         do {
-            // Make the network request using async/await
             let (data, response) = try await session.data(for: request)
             
-            // Check for valid HTTP response
-            guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
-                throw URLError(.badServerResponse)
+            guard let httpResponse = response as? HTTPURLResponse else {
+                throw NetworkError.invalidResponse
             }
             
-            // Decode the JSON response into the expected generic type
+            if !(200...299).contains(httpResponse.statusCode) {
+                throw httpResponse.toNetworkError(data: data)
+            }
+            
             let decoder = JSONDecoder()
-            let decodedObject = try decoder.decode(T.self, from: data)
             
-            return decodedObject
+            do {
+                let decodedObject = try decoder.decode(T.self, from: data)
+                return decodedObject
+            } catch {
+                throw NetworkError.decodeFailed
+            }
             
-        } catch {
-            // Handle and propagate any errors
+        } catch let error as NetworkError {
             throw error
+        } catch {
+            throw NetworkError.other(error.localizedDescription)
         }
     }
 }
